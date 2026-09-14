@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StructAI — Steel Column Base Plate Design | IS 800:2007 · AISC 360-22</title>
+  <meta name="description" content="Professional steel column base plate design. IS 800:2007 LSM and AISC 360-22 LRFD/ASD. Correct clauses, correct units, full HTML report."/>
+  <meta name="author" content="Ranjith, Structural Engineer"/>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- StructAI Stylesheet -->
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Three.js + GSAP (landing animations) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js" defer></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     THREE.JS CANVAS  (landing background only)
+     ═══════════════════════════════════════════════════════════ -->
+<canvas id="three-canvas"></canvas>
+<div class="landing-bg-overlay" id="lbg"></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     LANDING PAGE
+     ═══════════════════════════════════════════════════════════ -->
+<div id="landing-page" class="landing-overlay">
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div style="max-width:680px;width:100%;">
+
+      <div id="ey" class="hero-eyebrow">
+        ★ &nbsp; Structural Engineering Design Tool &nbsp; ★
+      </div>
+
+      <h1 id="ht" class="hero-title">
+        Struct<span class="accent">AI</span>
+      </h1>
+
+      <p id="hs" class="hero-sub">
+        Steel Column Base Plate Design — Code Compliant &amp; Fully Traced<br/>
+        <strong style="color:var(--col-ink);">🇮🇳 Indian:</strong>
+        IS 800:2007 · IS 456:2000 · IS 5624:1993 · IS 1367 · IS 875/1893<br/>
+        <strong style="color:var(--col-ink);">🇺🇸 US:</strong>
+        AISC 360-22 · ACI 318-19 · AISC DG1 · ASCE 7-22
+      </p>
+
+      <div id="hp" class="hero-pills">
+        <span class="badge badge-is">IS 800:2007 LSM</span>
+        <span class="badge badge-is">IS 456:2000</span>
+        <span class="badge badge-is">IS 5624 / IS 1367</span>
+        <span class="badge badge-us">AISC 360-22 LRFD/ASD</span>
+        <span class="badge badge-us">ACI 318-19 Ch.17</span>
+        <span class="badge badge-us">AISC DG1</span>
+        <span class="badge badge-pass">γm0=1.10 &amp; φ=0.90</span>
+      </div>
+
+      <div id="hcta" class="hero-cta">
+        <button onclick="loadExAndOpen()" class="btn btn-primary btn-lg">
+          <i class="fas fa-flask"></i> Load Example &amp; Design
+        </button>
+        <button onclick="openApp()" class="btn btn-secondary btn-lg">
+          Start Blank
+        </button>
+      </div>
+
+      <div class="hero-example-note">
+        <strong>Built-in Example:</strong> ISMB 300 · 800 kN compression · 60 kN·m · 40 kN shear
+        · M30 · 600×600 pedestal · IS 800:2007 LSM · tp_req = 32.56 mm (tp=25 mm ✗ REDESIGN)
+      </div>
+
+    </div>
+
+    <div class="hero-scroll">
+      <div>↓ scroll</div>
+      <i class="fas fa-chevron-down" style="font-size:11px;"></i>
+    </div>
+  </section>
+
+  <!-- ── Stats Bar ──────────────────────────────────────────── -->
+  <section class="stats-bar" id="ss">
+    <div class="stats-grid">
+      <div><div class="stat-num" id="st1">0</div><div class="stat-label">Design Checks</div></div>
+      <div><div class="stat-num" id="st2">0</div><div class="stat-label">Code Standards</div></div>
+      <div><div class="stat-num" id="st3">0</div><div class="stat-label">Load Combinations</div></div>
+      <div><div class="stat-num" id="st4">0</div><div class="stat-label">Report Sections</div></div>
+    </div>
+  </section>
+
+  <!-- ── Features ───────────────────────────────────────────── -->
+  <section class="features-section">
+    <div class="features-inner">
+
+      <div class="features-heading">
+        <h2>Two Code Paths — Zero Mixing</h2>
+        <p>Correct clauses · Correct formulas · Correct units. No cross-contamination ever.</p>
+      </div>
+
+      <div class="code-path-grid">
+        <div class="code-path-card is">
+          <div class="code-path-flag">🇮🇳</div>
+          <div class="code-path-title is">Indian Code Path</div>
+          <ul class="code-path-list">
+            <li><strong>Plate tp:</strong> IS 800:2007 Cl.7.4.3.1 (γm0 = 1.10)</li>
+            <li><strong>Bearing:</strong> IS 456:2000 Cl.34.4 (fp = 0.45·fck·CF)</li>
+            <li><strong>Anchors:</strong> IS 800 Cl.10.3 + IS 5624:1993</li>
+            <li><strong>Combos:</strong> IS 875 / IS 1893 — 7 combinations</li>
+            <li><strong>Sections:</strong> IS 808:1989 ISMB / ISHB / ISSC</li>
+            <li><strong>Units: kN, kN·m, mm, MPa ONLY</strong></li>
+          </ul>
+        </div>
+        <div class="code-path-card us">
+          <div class="code-path-flag">🇺🇸</div>
+          <div class="code-path-title us">US Code Path</div>
+          <ul class="code-path-list">
+            <li><strong>Plate tp:</strong> AISC DG1 Eq.2.3+2.6 (φ = 0.90)</li>
+            <li><strong>Bearing:</strong> AISC 360-22 J8.1 / ACI 318-19 §22.8.3</li>
+            <li><strong>Anchors:</strong> ACI 318-19 Ch.17 — all 8 sub-checks</li>
+            <li><strong>Combos:</strong> ASCE 7-22 §2.3 LRFD / §2.4 ASD</li>
+            <li><strong>Sections:</strong> AISC Manual W-Shape / HSS</li>
+            <li><strong>Units: kips, kip·ft, in, ksi ONLY</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="feature-mini-grid">
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#DAFBE1;">
+            <i class="fas fa-calculator" style="color:var(--col-pass);"></i>
+          </div>
+          <h3>Full Step-by-Step Calcs</h3>
+          <p>Every intermediate value shown. Formula → substitution → result. Code clause on every line.</p>
+        </div>
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#FFF8C5;">
+            <i class="fas fa-file-code" style="color:var(--col-caution);"></i>
+          </div>
+          <h3>Corporate HTML Report</h3>
+          <p>Download: cover page, inputs, SVG plan diagram, all calculations, results table, redesign notes.</p>
+        </div>
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#FFEBE9;">
+            <i class="fas fa-triangle-exclamation" style="color:var(--col-fail);"></i>
+          </div>
+          <h3>5-Level Warning System</h3>
+          <p>INFO → CAUTION → WARNING → CRITICAL → REDESIGN. Every failure shows what failed and the fix.</p>
+        </div>
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#EEF2FF;">
+            <i class="fas fa-code" style="color:var(--col-accent);"></i>
+          </div>
+          <h3>Python Library</h3>
+          <p>Standalone <code>indian_code.py</code> and <code>us_code.py</code> — same formulas, importable, testable.</p>
+        </div>
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#DAFBE1;">
+            <i class="fas fa-cube" style="color:var(--col-pass);"></i>
+          </div>
+          <h3>Live 3D Preview</h3>
+          <p>Rotating wireframe model of base plate, column, pedestal, and anchor bolts while you design.</p>
+        </div>
+        <div class="feature-mini">
+          <div class="feature-mini-icon" style="background:#FFF8C5;">
+            <i class="fas fa-shield-halved" style="color:var(--col-caution);"></i>
+          </div>
+          <h3>No Auto-Correction</h3>
+          <p>Plate dimensions NEVER silently changed. Every warning is explicit. Engineer stays in control.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:40px;">
+        <button onclick="loadExAndOpen()" class="btn btn-primary btn-lg">
+          Open Design Tool <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="landing-footer">
+    <strong>StructAI v5.0</strong> &nbsp;·&nbsp;
+    IS 800:2007 | IS 456:2000 | IS 5624:1993 | IS 1367 | IS 875:2015 | IS 1893:2016 |
+    AISC 360-22 | ACI 318-19 | AISC Design Guide 1 | ASCE 7-22<br/>
+    <span style="margin-top:4px;display:block;">
+      Designed for structural engineers by Ranjith, Structural Engineer
+    </span>
+  </footer>
+
+</div><!-- /landing-page -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP PAGE
+     ═══════════════════════════════════════════════════════════ -->
+<div id="app-page" style="display:none;opacity:0;transition:opacity .4s ease;">
+
+  <!-- ── Sticky Header ──────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="app-header-inner">
+
+      <!-- Left: brand + code tag -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button onclick="backToLanding()"
+                style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--col-ink-3);background:none;border:none;cursor:pointer;">
+          <i class="fas fa-chevron-left" style="font-size:11px;"></i> Home
+        </button>
+        <span style="color:var(--col-border);">|</span>
+        <div class="brand">
+          <span class="brand-name">Struct<span>AI</span></span>
+          <span class="brand-version">v5.0</span>
+          <span id="hdr-code-tag" class="badge badge-is" style="display:none;"></span>
+        </div>
+      </div>
+
+      <!-- Right: actions -->
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button onclick="generateReport()" class="btn btn-primary btn-sm">
+          <i class="fas fa-file-code"></i> HTML Report
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ── Progress Bar ───────────────────────────────────────── -->
+  <div class="prog-bar">
+    <div id="pgsteps" style="display:flex;width:100%;max-width:1000px;margin:0 auto;"></div>
+  </div>
+
+  <!-- ── App Body ───────────────────────────────────────────── -->
+  <div class="app-body">
+
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar">
+      <div class="nav-section-label">Design Steps</div>
+      <nav id="snav"></nav>
+
+      <div class="nav-divider"></div>
+
+      <div class="nav-section-label" style="padding:0 12px;">Quick Info</div>
+      <div class="qi-block">
+        <div>Code: <strong id="qi-code">—</strong></div>
+        <div>Column: <strong id="qi-col">—</strong></div>
+        <div>Plate: <strong id="qi-pl">—</strong></div>
+        <div>P: <strong id="qi-p">—</strong></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
+          Load: <span id="qi-cond" class="badge badge-pass">—</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <div id="sc" class="step-area"></div>
+    </main>
+
+    <!-- Right Panel -->
+    <aside class="app-rp">
+      <div class="app-rp-sticky">
+
+        <div class="rp-section-label">Design Status</div>
+        <div class="rp-status-box">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:13px;font-weight:600;">Overall</span>
+            <span id="rpob" class="badge badge-pass">—</span>
+          </div>
+          <div id="rpch" style="font-size:12px;color:var(--col-ink-3);line-height:1.8;"></div>
+        </div>
+
+        <div class="rp-section-label">Utilisation</div>
+        <div id="rpul" style="margin-bottom:16px;"></div>
+
+        <div class="rp-section-label">Warnings</div>
+        <div id="rpw"></div>
+
+      </div>
+    </aside>
+
+  </div><!-- /app-body -->
+
+</div><!-- /app-page -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALS
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Plate Size Warning -->
+<div id="m-ps" class="modal-overlay">
+  <div class="modal-box" style="max-width:460px;">
+    <div class="modal-head">
+      <h2><i class="fas fa-triangle-exclamation" style="color:var(--col-fail);margin-right:8px;"></i>Plate Size Warning</h2>
+    </div>
+    <div class="modal-body">
+      <p id="mmsg" style="margin-bottom:16px;line-height:1.6;"></p>
+      <div class="info-box info-3" style="border-radius:var(--r-md);margin-bottom:16px;">
+        Plate dimensions are <strong>NEVER auto-corrected</strong>. You must confirm or revise explicitly.
+      </div>
+      <div style="display:flex;gap:12px;">
+        <button onclick="closeModal('m-ps')" class="btn btn-primary" style="flex:1;justify-content:center;">
+          <i class="fas fa-pencil"></i> Revise Input
+        </button>
+        <button onclick="STATE.overrideConfirmed=true;closeModal('m-ps');" class="btn btn-secondary"
+                style="flex:1;justify-content:center;border-color:var(--col-caution-bd);color:var(--col-caution);">
+          Override (Confirm)
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HTML Report Modal -->
+<div id="m-rpt" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2><i class="fas fa-file-code" style="color:var(--col-accent);margin-right:8px;"></i>HTML Calculation Report — Ready</h2>
+      <button onclick="closeModal('m-rpt')"
+              style="background:none;border:none;cursor:pointer;color:var(--col-ink-3);font-size:18px;">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Success notice -->
+      <div style="background:var(--col-pass-bg);border:1px solid var(--col-pass-bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:600;color:var(--col-pass);">✓ Complete corporate report generated</div>
+        <div style="font-size:12px;color:var(--col-pass);margin-top:3px;">
+          Cover page · Input summary · SVG plan diagram · Step-by-step calcs · Results table · Redesign recommendations
+        </div>
+      </div>
+
+      <!-- Preview snippet -->
+      <div class="report-preview" id="rprv">
+        Report not yet generated — click "HTML Report" button above.
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <button onclick="closeModal('m-rpt')" class="btn btn-secondary" style="flex:1;justify-content:center;">
+          Close
+        </button>
+        <button onclick="downloadReport()" class="btn btn-primary" style="flex:1;justify-content:center;">
+          <i class="fas fa-download"></i> Download HTML Report
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN APPLICATION SCRIPT
+     ═══════════════════════════════════════════════════════════ -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
